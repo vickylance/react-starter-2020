@@ -1,17 +1,16 @@
-const path = require("path");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const ESLintPlugin = require("eslint-webpack-plugin");
-const PrettierPlugin = require("prettier-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+const path = require('path');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
+const PrettierPlugin = require('prettier-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // const StylelintPlugin = require("stylelint-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const DashboardPlugin = require("webpack-dashboard/plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 
-const isDevelopment = process.env.NODE_ENV !== "production";
-const outputPath = path.resolve(__dirname, "../dist");
+const isDevelopment = process.env.NODE_ENV !== 'production';
+const outputPath = path.resolve(__dirname, '../dist');
 
 const eslintOptions = {
   emitWarning: true,
@@ -26,19 +25,20 @@ const prettierConfig = {
   tabWidth: 2,
   useTabs: false,
   semi: true,
-  trailing: true,
-  encoding: "utf-8",
-  extensions: [".js", ".jsx"],
+  trailingComma: true,
+  singleQuote: true,
+  encoding: 'utf-8',
+  extensions: ['.js', '.jsx'],
 };
 
 const config = {
-  mode: isDevelopment ? "development" : "production",
-  entry: ["./src/index.js"],
+  mode: isDevelopment ? 'development' : 'production',
+  entry: ['./src/index.js'],
   output: {
     path: outputPath,
-    filename: "[name].[contenthash].js",
+    filename: '[name].[contenthash].js',
   },
-  devtool: "source-map",
+  devtool: 'source-map',
   devServer: {
     contentBase: outputPath,
     compress: true,
@@ -51,28 +51,28 @@ const config = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
         },
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader",
+            loader: 'html-loader',
           },
         ],
       },
       {
         test: /\.svg$/,
-        use: "file-loader",
+        use: 'file-loader',
       },
       {
         test: /\.png$/,
         use: [
           {
-            loader: "url-loader",
+            loader: 'url-loader',
             options: {
-              mimetype: "image/png",
+              mimetype: 'image/png',
             },
           },
         ],
@@ -80,9 +80,9 @@ const config = {
       {
         test: /\.css$/,
         use: [
-          isDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
+          isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               sourceMap: true,
             },
@@ -92,15 +92,15 @@ const config = {
       {
         test: /\.scss$/,
         use: [
-          isDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
+          isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               sourceMap: true,
             },
           },
           {
-            loader: "sass-loader",
+            loader: 'sass-loader',
             options: {
               sourceMap: true,
             },
@@ -110,7 +110,7 @@ const config = {
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: ['.js', '.jsx'],
     // alias: {
     //   "react-dom": "@hot-loader/react-dom",
     // },
@@ -122,13 +122,13 @@ const config = {
     // new StylelintPlugin(),
     new ESLintPlugin(eslintOptions),
     new BundleAnalyzerPlugin({
-      analyzerMode: "static",
+      analyzerMode: 'static',
       openAnalyzer: false,
     }),
     new MiniCssExtractPlugin(),
     new HtmlWebPackPlugin({
-      template: "./src/index.html",
-      filename: "./index.html",
+      template: './src/index.html',
+      filename: './index.html',
     }),
   ],
   optimization: {
@@ -139,13 +139,13 @@ const config = {
         extractComments: true,
       }),
     ],
-    runtimeChunk: "single",
+    runtimeChunk: 'single',
     splitChunks: {
       cacheGroups: {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
-          name: "vendors",
-          chunks: "all",
+          name: 'vendors',
+          chunks: 'all',
         },
       },
     },
@@ -155,7 +155,7 @@ const config = {
 module.exports = (env, argv) => {
   if (argv.hot) {
     // Cannot use 'contenthash' when hot reloading is enabled.
-    config.output.filename = "[name].[hash].js";
+    config.output.filename = '[name].[hash].js';
   }
 
   return config;

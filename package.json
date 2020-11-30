@@ -11,7 +11,7 @@
     "test:file": "npm run jest --collectCoverage=false",
     "test:watch": "npm run jest --verbose--watchAll --coverageReporters='text-summary'",
     "prepush:check": "npm-run-all prettier:check lint:check test:prepush",
-    "prettier": "prettier \"{src}/**/*.{js,md.scss,css}\"",
+    "prettier": "prettier ./src",
     "prettier:check": "npm run prettier --check",
     "prettier:fix": "npm run prettier --write",
     "lint": "eslint --config ./config/eslint.config.js ./src/",
