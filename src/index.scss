@@ -1,0 +1,10 @@
+@import "./temp.scss";
+
+$bg-img: url('https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png');
+
+.app {
+  .child {
+    color: red;
+    background-image: $bg-img;
+  }
+}

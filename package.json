@@ -1,0 +1,81 @@
+{
+  "name": "vijay-react-build",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development webpack-dashboard -- webpack serve --config config/webpack.config.js",
+    "build": "webpack-dashboard -- webpack --config config/webpack.config.js",
+    "jest": "cross-env NODE_ENV=test jest",
+    "test:prepush": "npm run jest --bail --silent",
+    "test:file": "npm run jest --collectCoverage=false",
+    "test:watch": "npm run jest --verbose--watchAll --coverageReporters='text-summary'",
+    "prepush:check": "npm-run-all prettier:check lint:check test:prepush",
+    "prettier": "prettier \"{src}/**/*.{js,md.scss,css}\"",
+    "prettier:check": "npm run prettier --check",
+    "prettier:fix": "npm run prettier --write",
+    "lint": "eslint --config ./config/eslint.config.js ./src/",
+    "lint:check": "npm run lint --cache",
+    "lint:fix": "npm run lint:check --fix",
+    "stylelint": "stylelint ./src/**/*.{scss,css}",
+    "stylelint:fix": "npm run stylelint --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "jest": "^26.6.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-hot-loader": "^4.13.0",
+    "stylelint-scss": "^3.18.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
+    "@webpack-cli/serve": "^1.1.0",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "cross-env": "^7.0.2",
+    "css-loader": "^5.0.1",
+    "eslint": "^7.14.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-webpack-plugin": "^2.4.0",
+    "html-loader": "^1.3.2",
+    "html-webpack-plugin": "^4.5.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.2",
+    "mini-css-extract-plugin": "^1.3.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "2.2.1",
+    "prettier-webpack-plugin": "^1.2.0",
+    "sass": "^1.29.0",
+    "sass-loader": "^10.1.0",
+    "style-loader": "^2.0.0",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-webpack-plugin": "^2.1.1",
+    "terser-webpack-plugin": "^5.0.3",
+    "webpack": "^5.9.0",
+    "webpack-bundle-analyzer": "^4.1.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dashboard": "^3.2.1",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run prepush:check"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": "npm-run-all prettier:fix lint:fix",
+    "src/**/*.scss": "npm-run-all prettier:fix stylelint:fix",
+    "src/**/*.test.{js,jsx}": "npm-run-all prettier:fix lint:fix test:file",
+    "src/**/*.{css,md}": "prettier --write"
+  }
+}
